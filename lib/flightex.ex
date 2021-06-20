@@ -1,18 +1,19 @@
 defmodule Flightex do
-  @moduledoc """
-  Documentation for `Flightex`.
-  """
+  alias Flightex.Bookings.Agent, as: BookingAgent
+  alias Flightex.Bookings.CreateOrUpdate, as: BookingCreateOrUpdate
+  alias Flightex.Users.Agent, as: UserAgent
+  alias Flightex.Users.CreateOrUpdate, as: UserCreateOrUpdate
 
-  @doc """
-  Hello world.
+  def start_agents() do
+    BookingAgent.start_link(%{})
+    UserAgent.start_link(%{})
+  end
 
-  ## Examples
+  def create_or_update_booking(%{} = booking) do
+    BookingCreateOrUpdate.call(booking)
+  end
 
-      iex> Flightex.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def create_or_update_user(%{} = user) do
+    UserCreateOrUpdate.call(user)
   end
 end
